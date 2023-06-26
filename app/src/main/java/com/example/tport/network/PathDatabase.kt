@@ -1,15 +1,15 @@
-package com.example.tport.data
+package com.example.tport.network
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.example.tport.network.dto.previous.Path0
 
-@Database(entities = [Path::class, Path2::class], version = 1, exportSchema = false)
+@Database(entities = [Path0::class], version = 1, exportSchema = false)
 abstract class PathDatabase: RoomDatabase() {
 
     abstract fun pathDao(): PathDao
-    abstract fun pathDao2(): PathDao2
 
     companion object {
         @Volatile

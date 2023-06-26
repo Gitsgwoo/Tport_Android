@@ -1,9 +1,8 @@
 package com.example.tport
 
 import android.app.Application
-import com.example.tport.data.PathDatabase
 import com.example.tport.di.appModule
-import com.example.tport.util.ExtractData
+import com.example.tport.network.PathDatabase
 import com.naver.maps.map.NaverMapSdk
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger

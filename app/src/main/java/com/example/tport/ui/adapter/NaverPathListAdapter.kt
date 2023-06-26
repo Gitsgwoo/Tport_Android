@@ -1,23 +1,21 @@
-package com.example.tport.ui
+package com.example.tport.ui.adapter
 
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.tport.data.Path
-import com.example.tport.data.Path2
 import com.example.tport.databinding.PathListItemBinding
+import com.example.tport.network.dto.previous.Path0
 
-class TportPathListAdapter(
-    private val onItemClicked:(Path) -> Unit
-): ListAdapter<Path, TportPathListAdapter.PathViewHolder>(DiffCallback) {
+class NaverPathListAdapter(
+    private val onItemClicked:(Path0) -> Unit
+): ListAdapter<Path0, NaverPathListAdapter.PathViewHolder>(DiffCallback) {
 
     class PathViewHolder(private val binding: PathListItemBinding):
         RecyclerView.ViewHolder(binding.root) {
 
-        private fun concatenate(
+        fun concatenate(
             s1: String, s2: String, s3: String, s4: String, s5: String, s6: String,
             s7: String, s8: String, s9: String, s10: String, s11: String, s12: String,
         ): String {
@@ -31,39 +29,18 @@ class TportPathListAdapter(
                     }
                 }
             }
-            return output.joinToString(" → ")
+            return output.joinToString("  →  ")
         }
 
-        fun bind(path: Path){
-            val hourArrival = path.tportArrivalTime/60
-            val minArrival = path.tportArrivalTime%60
+        fun bind(path: Path0){
+            val hourArrival = path.naverArrivalTime/60
+            val minArrival = path.naverArrivalTime%60
             val timeArrival = hourArrival.toString() + "시 " + minArrival.toString() + "분"
             val listArrivalTime: List<String> = listOf("ㅣ", timeArrival, "도착", "ㅣ")
-            val hourTravel = path.tportTravelTime/60
-            val minTravel = path.tportTravelTime%60
+            val hourTravel = path.naverTravelTime/60
+            val minTravel = path.naverTravelTime%60
             val timeTravel = hourTravel.toString() + "시간 " + minTravel.toString() + "분"
-
             binding.apply {
-                val waitingConditionText = if (path.waitingNum <= path.emptyNum / 2) {
-                    "여유"
-                } else if (path.emptyNum / 2 < path.waitingNum && path.waitingNum <= path.emptyNum) {
-                    "혼잡"
-                } else {
-                    "포화"
-                }
-                waitingCondition.text = waitingConditionText
-                when (waitingCondition.text) {
-                    "여유" -> {
-                        waitingCondition.setTextColor(Color.parseColor("#00FF00")) // 연두색
-                    }
-                    "혼잡" -> {
-                        waitingCondition.setTextColor(Color.parseColor("#FF7F00")) // 주황색
-                    }
-                    else -> {
-                        waitingCondition.setTextColor(Color.parseColor("#FF0000")) // 빨간색
-                    }
-                }
-
                 totalTravelTime.text = timeTravel
                 finalArrivalTime.text = listArrivalTime.joinToString(" ")
                 fare.text = path.fare
@@ -74,8 +51,6 @@ class TportPathListAdapter(
             }
         }
     }
-
-
 
     private var _viewBinding: PathListItemBinding? = null
     private val viewBinding get() = _viewBinding!!
@@ -96,12 +71,12 @@ class TportPathListAdapter(
     }
 
     companion object {
-        private val DiffCallback = object : DiffUtil.ItemCallback<Path>() {
-            override fun areItemsTheSame(oldItem: Path, newItem: Path): Boolean {
+        private val DiffCallback = object : DiffUtil.ItemCallback<Path0>() {
+            override fun areItemsTheSame(oldItem: Path0, newItem: Path0): Boolean {
                 return oldItem.id == newItem.id
             }
 
-            override fun areContentsTheSame(oldItem: Path, newItem: Path): Boolean {
+            override fun areContentsTheSame(oldItem: Path0, newItem: Path0): Boolean {
                 return oldItem == newItem
             }
         }

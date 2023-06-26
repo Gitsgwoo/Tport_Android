@@ -1,4 +1,4 @@
-package com.example.tport.ui
+package com.example.tport.ui.adapter
 
 import android.graphics.Color
 import android.view.LayoutInflater
@@ -7,8 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.tport.data.Path
-import com.example.tport.dto.MethodDTO
+import com.example.tport.network.dto.previous.MethodDTO
 import com.example.tport.databinding.MethodListItemBinding
 
 class MethodListAdapter(
