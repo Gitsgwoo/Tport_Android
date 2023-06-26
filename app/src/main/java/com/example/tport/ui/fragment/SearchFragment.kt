@@ -41,7 +41,7 @@ class SearchFragment : Fragment() {
                     Log.d("MyNoteFragment", "start navigate to login_graph")
                     findNavController().navigate(R.id.action_global_login_graph)
                 }
-                findNavController().navigate(R.id.action_global_login_graph)
+//                findNavController().navigate(R.id.action_global_login_graph)
             }
         }
 
