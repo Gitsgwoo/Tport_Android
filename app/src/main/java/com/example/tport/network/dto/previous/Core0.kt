@@ -1,4 +1,4 @@
-package com.example.tport.dto
+package com.example.tport.network.dto.previous
 
 data class TravelDTO(
     val origin: String,

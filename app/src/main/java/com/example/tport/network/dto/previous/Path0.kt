@@ -1,12 +1,11 @@
-package com.example.tport.data
+package com.example.tport.network.dto.previous
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.example.tport.dto.TravelDTO
 
 @Entity(tableName = "path_table")
-data class Path (
+data class Path0 (
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
     @ColumnInfo

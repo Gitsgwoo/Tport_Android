@@ -1,4 +1,4 @@
-package com.example.tport.ui
+package com.example.tport.ui.fragment
 
 import android.content.Context
 import android.os.Bundle
@@ -12,31 +12,29 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.tport.MapFragmentActivity
 import com.example.tport.MyApplication
-import com.example.tport.R
-import com.example.tport.data.Path
 import com.example.tport.databinding.FragmentPathDetailBinding
-import com.example.tport.util.ExtractData
+import com.example.tport.network.dto.previous.Path0
+import com.example.tport.ui.PathFindingViewModel
+import com.example.tport.ui.PathFindingViewModelFactory
+import com.example.tport.ui.adapter.MethodListAdapter
 
 
 class PathDetailFragment : Fragment() {
 
     lateinit var mainActivity: MapFragmentActivity
-    lateinit var extractData: ExtractData
-    lateinit var path: Path
+    lateinit var path: Path0
     private var _binding: FragmentPathDetailBinding? = null
     private val binding get() = _binding!!
     private val navigationArgs: PathDetailFragmentArgs by navArgs()
     private val viewModel: PathFindingViewModel by activityViewModels {
         PathFindingViewModelFactory(
             (activity?.application as MyApplication).database.pathDao(),
-            extractData
         )
     }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
         mainActivity = context as MapFragmentActivity
-        extractData = ExtractData(mainActivity)
     }
 
     override fun onCreateView(
@@ -73,7 +71,7 @@ class PathDetailFragment : Fragment() {
 
     }
 
-    fun bind(path: Path){
+    fun bind(path: Path0){
         val hourArrival = path.tportArrivalTime/60
         val minArrival = path.tportArrivalTime%60
         val timeArrival = hourArrival.toString() + "시 " + minArrival.toString() + "분"
@@ -112,7 +110,7 @@ class PathDetailFragment : Fragment() {
         return output.joinToString("  →  ")
     }
 
-    private fun updateReservedData(path: Path) {
+    private fun updateReservedData(path: Path0) {
         viewModel.updateReservedNum(path.id)
     }
 }

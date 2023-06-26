@@ -11,4 +11,7 @@
     <string name="naver_path">네이버 경로순</string>
     <string name="tport_path">Tport 경로순</string>
     <string name="reserve">예약</string>
+    <string name="login">로그인</string>
+    <string name="user_name">사용자 이름</string>
+    <string name="password">비밀번호</string>
 </resources>

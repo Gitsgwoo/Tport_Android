@@ -1,28 +1,21 @@
 package com.example.tport.ui
 
-import android.util.Log
 import androidx.lifecycle.*
-import com.example.tport.data.Path
-import com.example.tport.data.Path2
-import com.example.tport.data.PathDao
-import com.example.tport.data.PathDao2
-import com.example.tport.dto.MethodDTO
-import com.example.tport.util.ExtractData
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
+import com.example.tport.network.dto.previous.Path0
+import com.example.tport.network.PathDao
+import com.example.tport.network.dto.previous.MethodDTO
 import kotlinx.coroutines.launch
 
 class PathFindingViewModel(
     private val pathDao: PathDao,
-    private val extractedData: ExtractData
 ): ViewModel() {
 
-    val pathList: LiveData<List<Path>> = pathDao.getPathList().asLiveData()
-    lateinit var searchedPathList: LiveData<List<Path>>
-    lateinit var tportSearchedPathList: LiveData<List<Path>>
+    val pathList: LiveData<List<Path0>> = pathDao.getPathList().asLiveData()
+    lateinit var searchedPathList: LiveData<List<Path0>>
+    lateinit var tportSearchedPathList: LiveData<List<Path0>>
 
     // path_table
-    fun retrievePath(id: Int): LiveData<Path>{
+    fun retrievePath(id: Int): LiveData<Path0>{
         return pathDao.getPath(id).asLiveData()
     }
 
@@ -34,7 +27,7 @@ class PathFindingViewModel(
         tportSearchedPathList = pathDao.getTportSearchedPathList(origin, destination, searchTime).asLiveData()
     }
 
-    fun getMethodList(path: Path): List<MethodDTO>{
+    fun getMethodList(path: Path0): List<MethodDTO>{
         val method1 = MethodDTO(1, path.method1, path.startPoint1, path.endPoint1, path.travelTime1)
         val method2 = MethodDTO(2, path.method2, path.startPoint2, path.endPoint2, path.travelTime2)
         val method3 = MethodDTO(3, path.method3, path.startPoint3, path.endPoint3, path.travelTime3)
@@ -63,45 +56,13 @@ class PathFindingViewModel(
             pathDao.updateReservedNum(id)
         }
     }
-
-
-
-
-
-////엑셀 파일을 룸 데이터베이스로 변환하여 저장
-//    private suspend fun insertDataToDatabase() {
-//        val dataList: List<Path> = extractedData.extractDataFromXlsx()
-//        for (path in dataList) {
-//            pathDao.insertPath(path)
-//        }
-//    }
-//
-//    init {
-//        CoroutineScope(Dispatchers.IO).launch {
-//            insertDataToDatabase()
-//        }
-//    }
-
-////엑셀 파일을 룸 데이터베이스로 변환하여 저장
-//    private suspend fun insertDataToDatabase2() {
-//        val dataList: List<Path> = extractedData.extractDataFromXlsx()
-//        for (path in dataList) {
-//            pathDao2.insertPath2(path)
-//        }
-//    }
-//
-//    init {
-//        CoroutineScope(Dispatchers.IO).launch {
-//            insertDataToDatabase2()
-//        }
-//    }
 }
 
-class PathFindingViewModelFactory(private val pathDao: PathDao, private val extractedData: ExtractData) : ViewModelProvider.Factory {
+class PathFindingViewModelFactory(private val pathDao: PathDao) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(PathFindingViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")
-            return PathFindingViewModel(pathDao, extractedData) as T
+            return PathFindingViewModel(pathDao) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }
